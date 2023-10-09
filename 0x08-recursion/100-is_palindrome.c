@@ -1,42 +1,49 @@
-#include <stdio.h>
 #include "main.h"
+
 /**
- * _strlen_recursion - returns the length of a string.
- * @s: the string to count
- * Return: length of the string
+ * length - is the length of the string
+ * @s: string used
+ * Return: string length
  */
-int _strlen_recursion(char *s)
+int length(char *s)
 {
+	int i = 0;
+
 	if (*s)
 	{
-		s++;
-		return (1 + _strlen_recursion(s));
+		i = i + length(s + 1);
+		return (i += 1);
 	}
 	return (0);
 }
+
 /**
- * checker - helper function for is_palindrome
- * @str: the string
- * @len: length of string
- * @count: counter of recursion
- * Return: 1 if string is a palindrome, 0 if it is not.
+ * help - length of the string by index
+ * @i: integer
+ * @s: string
+ * Return: int value of the result
  */
-int checker(char *str, int len, int count)
+int help(int i, char *s)
 {
-	if (count >= len)
-		return (1);
-	if (str[len] == str[count])
-		return (checker(str, len - 1, count + 1));
-	return (0);
+	if (*s)
+	{
+		if (*s != s[length(s) - i])
+		{
+			return (0);
+		}
+		return (help(i + 1, s + 1));
+	}
+	return (1);
 }
+
 /**
- * is_palindrome - checks if the string is a palindrome
- * @s: the string to check
- * Return: 1 if string is a palindrome, 0 if it is not.
+ * is_palindrome - is current value equal to the previous value
+ * @s: string
+ * Return: boolean
  */
 int is_palindrome(char *s)
 {
-	int len = _strlen_recursion(s);
-	int count = 0;
+	int i = 1;
 
-	return (checker(s, len - 1, count));
+	return (help(i, s));
+}
